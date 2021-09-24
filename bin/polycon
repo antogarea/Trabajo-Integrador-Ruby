@@ -14,7 +14,7 @@ require 'polycon'
 
 # directorios
 Dir.mkdir("#{Dir.home}/.polycon") unless Dir.exist? "#{Dir.home}/.polycon" #Si no existe crea el dir polycon
-Dir.chdir("#{Dir.home}/.polycon") # Se posiciona
+Dir.chdir("#{Dir.home}/.polycon") # Se posiciona ahi
 
 # Ejecuta, utilizando la gema dry-cli, los comandos que permiten utilizar la herramienta
 Dry::CLI.new(Polycon::Commands).call

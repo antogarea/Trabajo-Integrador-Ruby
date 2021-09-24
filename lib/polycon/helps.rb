@@ -8,9 +8,4 @@ class Help
     return File.join(Dir.home, "/.polycon/")
   end
 
-  def self.format_name(name)
-    name.sub(/A"/, "").sub(/"z/, "")
-  end
-
-
 end

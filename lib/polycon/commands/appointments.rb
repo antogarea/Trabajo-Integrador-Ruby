@@ -1,6 +1,8 @@
 module Polycon
   module Commands
     module Appointments
+      require 'polycon/models/Appointment'
+      require 'polycon/helps'
       class Create < Dry::CLI::Command
         desc 'Create an appointment'
 
@@ -16,7 +18,10 @@ module Polycon
         ]
 
         def call(date:, professional:, name:, surname:, phone:, notes: nil)
-          warn "TODO: Implementar creación de un turno con fecha '#{date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          Help.professional_existe? professional
+          Appointment.new(date,professional,name,surname,phone,notes).create
+          puts "Turno creado exitosamente"
+          #warn "TODO: Implementar creación de un turno con fecha '#{date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
 
