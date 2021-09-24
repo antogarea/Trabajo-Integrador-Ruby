@@ -6,6 +6,7 @@ module Polycon
 
     extend Dry::CLI::Registry
 
+
     register 'professionals', aliases: ['p'] do |prefix|
       prefix.register 'create', Professionals::Create
       prefix.register 'rename', Professionals::Rename
