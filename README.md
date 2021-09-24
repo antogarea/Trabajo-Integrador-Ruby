@@ -1,16 +1,9 @@
 # Polycon
-
-Plantilla para comenzar con el Trabajo Práctico Integrador de la cursada 2021 de la materia
+Trabajo Práctico Integrador de la cursada 2021 de la materia
 Taller de Tecnologías de Producción de Software - Opción Ruby, de la Facultad de Informática
 de la Universidad Nacional de La Plata.
 
 Polycon es una herramienta para gestionar los turnos y profesionales de un policonsultorio.
-
-Este proyecto es simplemente una plantilla para comenzar a implementar la herramienta e
-intenta proveer un punto de partida para el desarrollo, simplificando el _bootstrap_ del
-proyecto que puede ser una tarea que consume mucho tiempo y conlleva la toma de algunas
-decisiones que más adelante pueden tener efectos tanto positivos como negativos en el
-proyecto.
 
 ## Uso de `polycon`
 
@@ -47,13 +40,6 @@ $ polycon [args]
 > Ruby (2.6 o posterior) y tener instaladas sus dependencias, las cuales se manejan con
 > Bundler. Para más información sobre la instalación de las dependencias, consultar la
 > siguiente sección ("Desarrollo").
-
-Documentar el uso para usuarios finales de la herramienta queda fuera del alcance de esta
-plantilla y **se deja como una tarea para que realices en tu entrega**, pisando el contenido
-de este archivo `README.md` o bien en uno nuevo. Ese archivo deberá contener cualquier
-documentación necesaria para entender el funcionamiento y uso de la herramienta que hayas
-implementado, junto con cualquier decisión de diseño del modelo de datos que consideres
-necesario documentar.
 
 ## Desarrollo
 
