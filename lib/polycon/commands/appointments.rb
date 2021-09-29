@@ -19,6 +19,7 @@ module Polycon
 
         def call(date:, professional:, name:, surname:, phone:, notes: nil)
           Help.professional_existe? professional
+          Help.appointment_exist? "#{professional}/#{Help.formato date}.#{"paf"}"
           Appointment.new(date,professional,name,surname,phone,notes).create
           puts "Turno creado exitosamente"
           #warn "TODO: Implementar creación de un turno con fecha '#{date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."

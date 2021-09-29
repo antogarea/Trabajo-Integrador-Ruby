@@ -2,11 +2,9 @@ class Appointment
   attr_accessor :turno, :profesional, :cuerpo
 
   def initialize date, professional, name, surname, phone, notes
-    self.turno = (date.gsub ":", "-").gsub " ", "_"
+    self.turno = Help.formato date
     self.profesional = professional
     self.cuerpo = "#{surname}\n#{name}\n#{phone.to_s}\n#{notes}"
-    puts "#{turno}"
-    puts cuerpo
   end
 
   def create
