@@ -115,7 +115,12 @@ module Polycon
         ]
 
         def call(old_date:, new_date:, professional:)
-          warn "TODO: Implementar cambio de fecha de turno con fecha '#{old_date}' para que pase a ser '#{new_date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          Help.professional_existe? professional
+          Help.appointment_not_exist? "#{professional}/#{Help.formato old_date}.#{"paf"}"  #Chequeo que exista el turno a renombrar
+          Help.appointment_exist? "#{professional}/#{Help.formato new_date}.#{"paf"}" #Chequeo que no exista el turno a renombrar
+          File.rename("#{professional}/#{Help.formato old_date}.#{"paf"}","#{professional}/#{Help.formato new_date}.#{"paf"}" )
+          puts ("Turno reprogramado exitosamente")
+          #warn "TODO: Implementar cambio de fecha de turno con fecha '#{old_date}' para que pase a ser '#{new_date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
 

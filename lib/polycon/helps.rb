@@ -6,7 +6,7 @@ class Help
 
   def self.appointment_exist? path
     if File.exist? path
-      abort("Ya existe un turno con este profesional en ese dia y horario")
+      abort("Ya existe el turno con este profesional en ese dia y horario")
     end
   end
 
