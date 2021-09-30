@@ -21,7 +21,7 @@ module Polycon
         argument :name, required: true, desc: 'Name of the professional'
 
         def call(name: )
-          abort("Este profesional no existe") unless Dir.exist? name
+          Help.professional_existe? name
           professional = Professional.new(name)
           professional.delete
           puts "Profesional eliminado correctamente"

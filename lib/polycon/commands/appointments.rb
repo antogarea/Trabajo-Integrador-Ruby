@@ -37,7 +37,10 @@ module Polycon
         ]
 
         def call(date:, professional:)
-          warn "TODO: Implementar detalles de un turno con fecha '#{date}' y profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          Help.professional_existe? professional
+          Help.appointment_not_exist? "#{professional}/#{Help.formato date}.#{"paf"}"
+          File.foreach("#{professional}/#{Help.formato date}.#{"paf"}") {|line| puts line}
+          #warn "TODO: Implementar detalles de un turno con fecha '#{date}' y profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
 
@@ -52,7 +55,11 @@ module Polycon
         ]
 
         def call(date:, professional:)
-          warn "TODO: Implementar borrado de un turno con fecha '#{date}' y profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          Help.professional_existe? professional
+          Help.appointment_not_exist? "#{professional}/#{Help.formato date}.#{"paf"}"
+          File.delete "#{professional}/#{Help.formato date}.#{"paf"}"
+          puts "Turno #{date} cancelado exitosamente"
+          #warn "TODO: Implementar borrado de un turno con fecha '#{date}' y profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
 
@@ -66,7 +73,13 @@ module Polycon
         ]
 
         def call(professional:)
-          warn "TODO: Implementar borrado de todos los turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+          Help.professional_existe? professional
+          Dir.foreach("#{Dir.home}/.polycon/#{professional}/") do |f|
+            fn = File.join("#{Dir.home}/.polycon/#{professional}/", f)
+            File.delete(fn) if f != '.' && f != '..'
+          end
+          puts "Se eliminaron todos los turnos del profesional #{professional}"
+          #warn "TODO: Implementar borrado de todos los turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
 
@@ -82,7 +95,8 @@ module Polycon
         ]
 
         def call(professional:)
-          warn "TODO: Implementar listado de turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
+
+          #warn "TODO: Implementar listado de turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
 

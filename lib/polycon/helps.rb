@@ -10,6 +10,12 @@ class Help
     end
   end
 
+  def self.appointment_not_exist? path
+    if not File.exist? path
+      abort("No existe un turno en ese dia y horario")
+    end
+  end
+
   def self.path
     return File.join(Dir.home, "/.polycon/")
   end
