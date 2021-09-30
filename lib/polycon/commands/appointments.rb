@@ -74,6 +74,7 @@ module Polycon
 
         def call(professional:)
           Help.professional_existe? professional
+          abort ("No existen turnos para el profesional #{professional}") unless not Dir.empty? "#{Dir.home}/.polycon/#{professional}/"
           Dir.foreach("#{Dir.home}/.polycon/#{professional}/") do |f|
             fn = File.join("#{Dir.home}/.polycon/#{professional}/", f)
             File.delete(fn) if f != '.' && f != '..'
@@ -95,7 +96,9 @@ module Polycon
         ]
 
         def call(professional:)
-
+          Help.professional_existe? professional
+          abort ("No existen turnos para el profesional #{professional}") unless not Dir.empty? "#{Dir.home}/.polycon/#{professional}/"
+          Dir.each_child("#{Dir.home}/.polycon/#{professional}/"){|file| puts " turno: #{file}"}
           #warn "TODO: Implementar listado de turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
