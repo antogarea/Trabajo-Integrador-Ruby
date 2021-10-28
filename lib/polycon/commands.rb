@@ -6,7 +6,6 @@ module Polycon
 
     extend Dry::CLI::Registry
 
-
     register 'professionals', aliases: ['p'] do |prefix|
       prefix.register 'create', Professionals::Create
       prefix.register 'rename', Professionals::Rename
@@ -22,6 +21,7 @@ module Polycon
       prefix.register 'show', Appointments::Show
       prefix.register 'cancel', Appointments::Cancel
       prefix.register 'cancel-all', Appointments::CancelAll
+      prefix.register 'export', Appointments::Export
     end
 
     register 'version', Version, aliases: ['v', '-v', '--version']

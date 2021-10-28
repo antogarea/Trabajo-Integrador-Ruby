@@ -18,6 +18,7 @@ module Polycon
         ]
 
         def call(date:, professional:, name:, surname:, phone:, notes: nil)
+          abort('No es una fecha valida') unless Help.valid_date? date
           Help.professional_existe? professional
           Help.appointment_exist? "#{professional}/#{Help.formato date}.#{"paf"}"
           Appointment.new(date,professional,name,surname,phone,notes).create
@@ -37,6 +38,7 @@ module Polycon
         ]
 
         def call(date:, professional:)
+          abort('No es una fecha valida') unless Help.valid_date? date
           Help.professional_existe? professional
           Help.appointment_not_exist? "#{professional}/#{Help.formato date}.#{"paf"}"
           File.foreach("#{professional}/#{Help.formato date}.#{"paf"}") {|line| puts line}
@@ -55,6 +57,7 @@ module Polycon
         ]
 
         def call(date:, professional:)
+          abort('No es una fecha valida') unless Help.valid_date? date
           Help.professional_existe? professional
           Help.appointment_not_exist? "#{professional}/#{Help.formato date}.#{"paf"}"
           File.delete "#{professional}/#{Help.formato date}.#{"paf"}"
@@ -96,6 +99,7 @@ module Polycon
         ]
 
         def call(professional:)
+          abort('No es una fecha valida') unless Help.valid_date? date
           Help.professional_existe? professional
           abort ("No existen turnos para el profesional #{professional}") unless not Dir.empty? "#{Dir.home}/.polycon/#{professional}/"
           Dir.each_child("#{Dir.home}/.polycon/#{professional}/"){|file| puts " turno: #{file}"}
@@ -115,9 +119,13 @@ module Polycon
         ]
 
         def call(old_date:, new_date:, professional:)
+          abort('No es una fecha valida') unless Help.valid_date? old_date
+          abort('No es una fecha valida') unless Help.valid_date? new_date
           Help.professional_existe? professional
-          Help.appointment_not_exist? "#{professional}/#{Help.formato old_date}.#{"paf"}"  #Chequeo que exista el turno a renombrar
-          Help.appointment_exist? "#{professional}/#{Help.formato new_date}.#{"paf"}" #Chequeo que no exista el turno a renombrar
+          #Chequeo que exista el turno a renombrar
+          Help.appointment_not_exist? "#{professional}/#{Help.formato old_date}.#{"paf"}"
+          #Chequeo que no exista el turno a renombrar
+          Help.appointment_exist? "#{professional}/#{Help.formato new_date}.#{"paf"}"
           File.rename("#{professional}/#{Help.formato old_date}.#{"paf"}","#{professional}/#{Help.formato new_date}.#{"paf"}" )
           puts ("Turno reprogramado exitosamente")
           #warn "TODO: Implementar cambio de fecha de turno con fecha '#{old_date}' para que pase a ser '#{new_date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
@@ -141,9 +149,23 @@ module Polycon
         ]
 
         def call(date:, professional:, **options)
+          abort('No es una fecha valida') unless Help.valid_date? date
           warn "TODO: Implementar modificación de un turno de la o el profesional '#{professional}' con fecha '#{date}', para cambiarle la siguiente información: #{options}.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
+
+      class Export < Dry::CLI::Command
+        desc 'Export appoiments'
+
+        option :professional, required: true, desc: 'Full name of the professional'
+        option :date, required: false, desc: 'Date to filter appointments by (should be the day)'
+
+        example [
+
+                ]
+
+        def call(professional:, date:)
+
     end
   end
 end

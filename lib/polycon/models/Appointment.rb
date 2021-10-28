@@ -8,7 +8,7 @@ class Appointment
   end
 
   def create
-    Dir.chdir("#{Dir.home}/.polycon/#{profesional}/") # Se posiciona ahi
+    Dir.chdir("#{Dir.home}/.polycon/#{profesional}/") # Me posiciono ahi
     # Creo el archivo al menos que ya exista uno con ese nombre
     File.write("#{self.turno}.paf", "#{self.cuerpo}")
   end

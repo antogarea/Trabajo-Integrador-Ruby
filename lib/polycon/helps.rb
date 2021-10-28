@@ -1,3 +1,4 @@
+require 'date'
 class Help
 
   def self.professional_existe? name
@@ -24,4 +25,13 @@ class Help
     return  (name.gsub ":", "-").gsub " ", "_"
   end
 
+  def self.valid_date? date
+    begin
+      date_format = '%Y-%m-%d %H-%m'
+      DateTime.strptime(date, date_format)
+      true
+    rescue ArgumentError
+      false
+    end
+  end
 end

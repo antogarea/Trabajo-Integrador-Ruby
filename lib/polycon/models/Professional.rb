@@ -3,7 +3,6 @@ class Professional
 
   def initialize nombre
     self.name =  nombre
-    #nombre.sub(/A"/, "").sub(/"z/, "")
   end
 
   def create
