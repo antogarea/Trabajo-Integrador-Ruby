@@ -157,12 +157,16 @@ module Polycon
       class Export < Dry::CLI::Command
         desc 'Export appoiments'
 
-        option :professional, required: true, desc: 'Full name of the professional'
-        option :date, required: false, desc: 'Date to filter appointments by (should be the day)'
+        option :professional, required: false, desc: 'Full name of the professional'
+        option :date, required: true, desc: 'Date to filter appointments by (should be the day)'
 
         example [
-
+                  '-- appointment: "2021-09-16"                                #Exporta todos los turnos de ese dia sin importar el prefesional',
+                  '-- appointment: "2021-09-16" --professional: "Alma Estevez" # Exporta todos los turnos de ese dia para el profesional Alma Estevez',
+                  '-- appointment: "2021-09-16"                                #Exporta todos los turnos de esa semana sin importar el prefesional',
+                  '-- appointment: "2021-09-16" --professional: "Alma Estevez" # Exporta todos los turnos de esa semana para el profesional Alma Estevez',
                 ]
+
 
         def call(professional:, date:)
 
