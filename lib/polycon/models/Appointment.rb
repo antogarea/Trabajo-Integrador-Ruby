@@ -23,10 +23,21 @@ class Appointment
     "#{profesional.path}/#{turno}.#{extension}"
   end
 
-  def transform_to_html
-    markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true)
-    render = markdown.render(self.content_appointment)
-    File.new(self.path("html"),"w+").write(render)
+  def self.transform_to_html(date,profesional)
+    #markdown = Redcarpet::Markdown.new()
+    if not profesional.nil?
+      Dir.chdir("#{Dir.home}/.polycon/#{profesional}/")
+      path = "#{Help.formato date}.paf"
+      puts(path)
+      if File.exist? path
+        puts('entra')
+        data = ""
+        File.foreach(path) {|line| data += line + "\n"}
+        data
+        markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true)
+        render = markdown.render(data)
+        File.new("#{Help.formato date}.html","w+").write(render)
+      end
+    end
   end
-
 end

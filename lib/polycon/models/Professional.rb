@@ -17,6 +17,22 @@ class Professional
     Dir.delete name
   end
 
+  def self.export_all
+    Dir.each_child(Help.path) do
+    |professional|
+      self.new(professional).export_childs
+    end
+  end
+
+  def export_childs
+    Dir.each_child(self.path) do
+    |appointment|
+      appointmentData = appointment
+      appointment = appointment.split()[0]
+      Appointment.transform_to_html
+    end
+  end
+
   # self.list es un metodo de clase
   def self.list
     Dir.each_child("#{File.join(Dir.home, "/.polycon/")}") { |file| puts "Professional: #{file}" }
