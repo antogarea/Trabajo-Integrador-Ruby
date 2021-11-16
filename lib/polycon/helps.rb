@@ -25,10 +25,9 @@ class Help
     return  (name.gsub ":", "-").gsub " ", "_"
   end
 
-  def self.valid_date? date
+  def self.valid_date?(date)
     begin
-      date_format = '%Y-%m-%d %H-%m'
-      DateTime.strptime(date, date_format)
+      date = Date.strptime(date, "%Y-%m-%d")
       true
     rescue ArgumentError
       false

@@ -2,6 +2,7 @@ module Polycon
   module Commands
     module Appointments
       require 'polycon/models/Appointment'
+      require 'polycon/models/Professional'
       require 'polycon/helps'
       class Create < Dry::CLI::Command
         desc 'Create an appointment'
@@ -20,8 +21,8 @@ module Polycon
         def call(date:, professional:, name:, surname:, phone:, notes: nil)
           abort('No es una fecha valida') unless Help.valid_date? date
           Help.professional_existe? professional
-          Help.appointment_exist? "#{professional}/#{Help.formato date}.#{"paf"}"
-          Appointment.new(date,professional,name,surname,phone,notes).create
+          Help.appointment_exist?"#{professional}/#{Help.formato date}.#{"paf"}"
+          Appointment.create_appointment(date,professional,name,surname,phone,notes)
           puts "Turno creado exitosamente"
           #warn "TODO: Implementar creación de un turno con fecha '#{date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
@@ -150,6 +151,12 @@ module Polycon
 
         def call(date:, professional:, **options)
           abort('No es una fecha valida') unless Help.valid_date? date
+          Help.professional_existe? professional
+          prof = Professional.find_professional professional
+          Help.appointment_not_exist? "#{professional}/#{Help.formato date}.#{"paf"}"
+          appointment = prof.find_appointment date
+          puts(appointment)
+
           warn "TODO: Implementar modificación de un turno de la o el profesional '#{professional}' con fecha '#{date}', para cambiarle la siguiente información: #{options}.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
@@ -169,6 +176,7 @@ module Polycon
 
 
         def call(date:, **options)
+
           professional = options[:professional]
           puts(professional)
           Appointment.transform_to_html(date,professional)

@@ -42,4 +42,14 @@ class Professional
     FileUtils.mv(name, new_name)
   end
 
+  def self.find_professional(name)
+    professional = new(name)
+    return professional
+  end
+
+  def find_appointment(date)
+    appointment = Appointment.new(DateTime.strptime(date, "%Y-%m-%d %H:%M"), self)
+    return Appointment.from_file(self, date)
+  end
+
 end

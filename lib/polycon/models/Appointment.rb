@@ -1,16 +1,20 @@
 class Appointment
-  attr_accessor :turno, :profesional, :cuerpo
+  attr_accessor :name, :surname, :phone, :notes, :date, :professional
 
-  def initialize date, professional, name, surname, phone, notes
-    self.turno = Help.formato date
-    self.profesional = professional
-    self.cuerpo = "#{surname}\n#{name}\n#{phone.to_s}\n#{notes}"
+  def initialize (date=nil, professional=nil, name=nil, surname=nil, phone=nil, notes=nil)
+    @date = date
+    @professional = professional
+    @name = name
+    @surname = surname
+    @phone = phone
+    @notes = notes
   end
 
-  def create
-    Dir.chdir("#{Dir.home}/.polycon/#{profesional}/") # Me posiciono ahi
-    # Creo el archivo al menos que ya exista uno con ese nombre
-    File.write("#{self.turno}.paf", "#{self.cuerpo}")
+  def self.create_appointment(date, professional, name, surname, phone, notes=nil)
+    date = Help.formato date
+    appointment = new(date, professional, name, surname, phone, notes)
+    File.open("#{Dir.home}/.polycon/#{appointment.professional}/#{appointment.date}.paf", "w") {|file| file.write("#{appointment.surname}\n#{appointment.name}\n#{appointment.phone}\n#{appointment.notes}")}
+
   end
 
   def content_appointment
@@ -21,6 +25,12 @@ class Appointment
 
   def path extension
     "#{profesional.path}/#{turno}.#{extension}"
+  end
+
+  def edit(options)
+    options.each do |key, value|
+      self.send(:"#{key}=", value)
+    end
   end
 
   def self.transform_to_html(date,profesional)
