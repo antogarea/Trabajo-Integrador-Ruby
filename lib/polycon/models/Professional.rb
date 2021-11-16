@@ -25,6 +25,21 @@ class Professional
     end
   end
 
+  def self.select_professionals
+    professionals = []
+    Help.select_professionals.map do |name|
+      professionals << new(name)
+    end
+    professionals
+  end
+
+  def appointments(date=nil)
+    Help.appointments(self, date).map do |date|
+      Appointment.from_file(self, date)
+    end
+  end
+
+
   def export_childs
     Dir.each_child(self.path) do
     |appointment|

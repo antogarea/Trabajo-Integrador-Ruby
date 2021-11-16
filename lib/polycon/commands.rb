@@ -3,7 +3,7 @@ module Polycon
     autoload :Professionals, 'polycon/commands/professionals'
     autoload :Appointments, 'polycon/commands/appointments'
     autoload :Version, 'polycon/commands/version'
-
+    autoload :Exports, 'polycon/commands/exports'
     extend Dry::CLI::Registry
 
     register 'professionals', aliases: ['p'] do |prefix|
@@ -21,9 +21,11 @@ module Polycon
       prefix.register 'show', Appointments::Show
       prefix.register 'cancel', Appointments::Cancel
       prefix.register 'cancel-all', Appointments::CancelAll
-      prefix.register 'export-day', Appointments::ExportDay
     end
 
+    register 'exports', aliases: ['exp'] do |prefix|
+      prefix.register 'export-day', Exports::ExportDay
+    end
     register 'version', Version, aliases: ['v', '-v', '--version']
   end
 end

@@ -21,6 +21,10 @@ class Help
     return File.join(Dir.home, "/.polycon/")
   end
 
+  def self.remove(file)
+    File.basename file, '.paf'
+  end
+
   def self.formato name
     return  (name.gsub ":", "-").gsub " ", "_"
   end
@@ -32,5 +36,31 @@ class Help
     rescue ArgumentError
       false
     end
+  end
+
+  def self.select_professionals
+    professionals = []
+    Dir.foreach("#{Dir.home}/.polycon/") do |professional|
+      next if professional == "." or professional == ".."
+      professionals << professional
+    end
+    professionals
+  end
+
+  def self.appointments(professional, date=nil)
+    appointments = []
+    Dir.foreach("#{Dir.home}/.polycon/#{professional.name}") do |appoint|
+      next if appoint == '.' || appoint == '..'
+      appoint = self.remove(appoint)
+      if(not date.nil?)
+        dateAppoint = Date.strptime(appoint, '%Y-%m-%d')
+        if (dateAppoint.to_s == date.to_s)
+          appointments << appoint
+        end
+      else
+        appointments << appoint
+      end
+    end
+    return appointments
   end
 end

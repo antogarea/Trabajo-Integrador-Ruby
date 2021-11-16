@@ -1,3 +1,4 @@
+require 'date'
 class Appointment
   attr_accessor :name, :surname, :phone, :notes, :date, :professional
 
@@ -37,9 +38,13 @@ class Appointment
     File.open("#{Dir.home}/.polycon/#{self.professional}/#{date}.paf", "w") {|file| file.write("#{self.surname}\n#{self.name}\n#{self.phone}\n#{self.notes}")}
   end
 
+  def self.get_date
+    return date
+  end
+
   def self.from_file(professional, date)
     appointment = new
-    File.open("#{Dir.home}/.polycon/#{professional}/#{date}.paf", 'r') do |line|
+    File.open("#{Dir.home}/.polycon/#{professional.name}/#{date}.paf", 'r') do |line|
       appointment.professional = professional
       appointment.date = DateTime.strptime(date, "%Y-%m-%d_%H-%M")
       appointment.surname = line.readline.chomp
