@@ -1,3 +1,4 @@
+require 'date'
 class Professional
   attr_accessor :name
 
@@ -48,7 +49,7 @@ class Professional
   end
 
   def find_appointment(date)
-    appointment = Appointment.new(DateTime.strptime(date, "%Y-%m-%d %H:%M"), self)
+    appointment = Appointment.new(date, self)
     return Appointment.from_file(self, date)
   end
 

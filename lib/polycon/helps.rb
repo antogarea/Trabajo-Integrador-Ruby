@@ -27,7 +27,7 @@ class Help
 
   def self.valid_date?(date)
     begin
-      date = Date.strptime(date, "%Y-%m-%d")
+      DateTime.strptime(date, "%Y-%m-%d %H:%M")
       true
     rescue ArgumentError
       false

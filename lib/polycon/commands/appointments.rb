@@ -43,7 +43,6 @@ module Polycon
           Help.professional_existe? professional
           Help.appointment_not_exist? "#{professional}/#{Help.formato date}.#{"paf"}"
           File.foreach("#{professional}/#{Help.formato date}.#{"paf"}") {|line| puts line}
-          #warn "TODO: Implementar detalles de un turno con fecha '#{date}' y profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
 
@@ -63,7 +62,6 @@ module Polycon
           Help.appointment_not_exist? "#{professional}/#{Help.formato date}.#{"paf"}"
           File.delete "#{professional}/#{Help.formato date}.#{"paf"}"
           puts "Turno #{date} cancelado exitosamente"
-          #warn "TODO: Implementar borrado de un turno con fecha '#{date}' y profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
 
@@ -84,7 +82,6 @@ module Polycon
             File.delete(fn) if f != '.' && f != '..'
           end
           puts "Se eliminaron todos los turnos del profesional #{professional}"
-          #warn "TODO: Implementar borrado de todos los turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
 
@@ -104,7 +101,6 @@ module Polycon
           Help.professional_existe? professional
           abort ("No existen turnos para el profesional #{professional}") unless not Dir.empty? "#{Dir.home}/.polycon/#{professional}/"
           Dir.each_child("#{Dir.home}/.polycon/#{professional}/"){|file| puts " turno: #{file}"}
-          #warn "TODO: Implementar listado de turnos de la o el profesional '#{professional}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
 
@@ -129,7 +125,6 @@ module Polycon
           Help.appointment_exist? "#{professional}/#{Help.formato new_date}.#{"paf"}"
           File.rename("#{professional}/#{Help.formato old_date}.#{"paf"}","#{professional}/#{Help.formato new_date}.#{"paf"}" )
           puts ("Turno reprogramado exitosamente")
-          #warn "TODO: Implementar cambio de fecha de turno con fecha '#{old_date}' para que pase a ser '#{new_date}'.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
 
@@ -152,12 +147,13 @@ module Polycon
         def call(date:, professional:, **options)
           abort('No es una fecha valida') unless Help.valid_date? date
           Help.professional_existe? professional
-          prof = Professional.find_professional professional
-          Help.appointment_not_exist? "#{professional}/#{Help.formato date}.#{"paf"}"
-          appointment = prof.find_appointment date
-          puts(appointment)
+          date = Help.formato date
+          Help.appointment_not_exist? "#{professional}/#{date}.#{"paf"}"
+          appointment = Appointment.from_file(professional,date)
+          appointment.edit(options)
+          appointment.save(date)
+          puts("El turno #{date} fue editado exitosamente")
 
-          warn "TODO: Implementar modificación de un turno de la o el profesional '#{professional}' con fecha '#{date}', para cambiarle la siguiente información: #{options}.\nPodés comenzar a hacerlo en #{__FILE__}:#{__LINE__}."
         end
       end
 
