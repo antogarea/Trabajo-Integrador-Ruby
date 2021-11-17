@@ -5,7 +5,11 @@ require 'polycon/models/Professional'
   class Export
     def self.export_appointments_in_day(date, professional)
       date = Date.strptime(date, "%Y-%m-%d")
-      title = "Turnos_del_dia#{date}"
+      if professional.nil?
+        title = "Turnos_del_dia_#{date}"
+      else
+        title = "Turnos_del_#{date}_para_#{professional.name}"
+      end
       template = ERB.new(File.read("#{Dir.home}/RubymineProjects/Trabajo-Integrador-Ruby/lib/polycon/templates/export_day.html.erb"))
       save_template(template, date, title, appointments_day(date, professional), horas())
     end
@@ -40,6 +44,6 @@ require 'polycon/models/Professional'
     end
 
     def self.save_template(template, date, title, appointments, horas, dates=nil)
-      File.open("#{Dir.pwd}/Turnos_del#{date}.html", "w+") {|file| file.write("#{template.result binding}")}
+      File.open("#{Dir.pwd}/#{title}.html", "w+") {|file| file.write("#{template.result binding}")}
     end
   end

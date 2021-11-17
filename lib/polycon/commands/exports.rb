@@ -21,8 +21,9 @@ module Polycon
             prof = Professional.find_professional(professional)
             Help.professional_existe? prof.name
           end
+          abort ("No existen turnos para el profesional #{professional}") unless not Dir.empty? "#{Dir.home}/.polycon/#{professional}/"
           Export.export_appointments_in_day(date, prof)
-          puts "La grilla fue creada con éxito, puede encontrarla en el directorio actual: #{Dir.pwd}"
+          puts "La grilla fue creada con éxito en #{Dir.pwd}"
         end
       end
 

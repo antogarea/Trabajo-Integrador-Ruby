@@ -49,12 +49,12 @@ class Help
 
   def self.appointments(professional, date=nil)
     appointments = []
+    puts(date)
     if(not date.nil?)
       Dir.foreach("#{Dir.home}/.polycon/#{professional.name}") do |appointment|
         next if appointment == '.' || appointment == '..'
         appointment = self.remove(appointment)
         dateAppointment = Date.strptime(appointment, '%Y-%m-%d')
-        puts(date)
         if (dateAppointment.to_s == date.to_s)
           appointments << appointment
         end

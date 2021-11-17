@@ -46,9 +46,6 @@ class Appointment
     date.strftime("%H:%M")
   end
 
-  def self.professional()
-    return self .professional
-  end
   def self.from_file(professional, date)
     appointment = new
     File.open("#{Dir.home}/.polycon/#{professional.name}/#{date}.paf", 'r') do |line|
@@ -64,21 +61,5 @@ class Appointment
     return appointment
   end
 
-  def self.transform_to_html(date,profesional)
-    #markdown = Redcarpet::Markdown.new()
-    if not profesional.nil?
-      Dir.chdir("#{Dir.home}/.polycon/#{profesional}/")
-      path = "#{Help.formato date}.paf"
-      puts(path)
-      if File.exist? path
-        puts('entra')
-        data = ""
-        File.foreach(path) {|line| data += line + "\n"}
-        data
-        markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true)
-        render = markdown.render(data)
-        File.new("#{Help.formato date}.html","w+").write(render)
-      end
-    end
-  end
+
 end
