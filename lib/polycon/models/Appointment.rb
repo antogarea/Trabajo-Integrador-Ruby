@@ -38,10 +38,17 @@ class Appointment
     File.open("#{Dir.home}/.polycon/#{self.professional}/#{date}.paf", "w") {|file| file.write("#{self.surname}\n#{self.name}\n#{self.phone}\n#{self.notes}")}
   end
 
-  def self.get_date
-    return date
+  def get_date
+    date.to_date
   end
 
+  def get_hour
+    date.strftime("%H:%M")
+  end
+
+  def self.professional()
+    return self .professional
+  end
   def self.from_file(professional, date)
     appointment = new
     File.open("#{Dir.home}/.polycon/#{professional.name}/#{date}.paf", 'r') do |line|

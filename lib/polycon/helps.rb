@@ -49,16 +49,21 @@ class Help
 
   def self.appointments(professional, date=nil)
     appointments = []
-    Dir.foreach("#{Dir.home}/.polycon/#{professional.name}") do |appoint|
-      next if appoint == '.' || appoint == '..'
-      appoint = self.remove(appoint)
-      if(not date.nil?)
-        dateAppoint = Date.strptime(appoint, '%Y-%m-%d')
-        if (dateAppoint.to_s == date.to_s)
-          appointments << appoint
+    if(not date.nil?)
+      Dir.foreach("#{Dir.home}/.polycon/#{professional.name}") do |appointment|
+        next if appointment == '.' || appointment == '..'
+        appointment = self.remove(appointment)
+        dateAppointment = Date.strptime(appointment, '%Y-%m-%d')
+        puts(date)
+        if (dateAppointment.to_s == date.to_s)
+          appointments << appointment
         end
-      else
-        appointments << appoint
+      end
+    else
+      Dir.foreach("#{Dir.home}/.polycon/#{professional.name}") do |appointment|
+        next if appointment == '.' || appointment == '..'
+        appointment = self.remove(appointment)
+        appointments << appointment
       end
     end
     return appointments

@@ -12,7 +12,7 @@ require 'polycon/models/Professional'
 
     def self.appointments_day(date, professional)
       appointments = template(professional)
-      appointments.select { |appointment| appointment.date == date }
+      appointments.select { |appointment| appointment.get_date == date }
     end
 
     def self.template(professional)
@@ -20,9 +20,12 @@ require 'polycon/models/Professional'
       if professional.nil?
         Professional.select_professionals.map do |prof|
           appointments += prof.appointments()
+          puts(prof.name)
         end
       else
         appointments += professional.appointments()
+      end
+      appointments.each do |appo|
       end
       return appointments
     end
