@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Polycon
   module Commands
     module Exports
@@ -11,17 +13,19 @@ module Polycon
         option :professional, required: false, desc: 'Full name of the professional'
 
         example [
-                  '"2021-11-11""',
-                  '"2021-11-11" --professional="Alma Estevez" "'
-                ]
+          '"2021-11-11""',
+          '"2021-11-11" --professional="Alma Estevez" "'
+        ]
 
-        def call(date:, professional:nil)
+        def call(date:, professional: nil)
           Help.valid_date? date
-          if !professional.nil?
+          unless professional.nil?
             prof = Professional.find_professional(professional)
             Help.professional_existe? prof.name
           end
-          abort ("No existen turnos para el profesional #{professional}") unless not Dir.empty? "#{Dir.home}/.polycon/#{professional}/"
+          if Dir.empty? "#{Dir.home}/.polycon/#{professional}/"
+            abort("No existen turnos para el profesional #{professional}")
+          end
           Export.export_appointments_in_day(date, prof)
           puts "La grilla fue creada con éxito en #{Dir.pwd}"
         end
@@ -34,14 +38,14 @@ module Polycon
         option :professional, required: false, desc: 'Full name of the professional'
 
         example [
-                  '-- appointment: "2021-09-16 10:00" --professional: "Alma Estevez"',
-                ]
+          '-- appointment: "2021-09-16 10:00" --professional: "Alma Estevez"'
+        ]
 
         def call(professional:, date:)
-
+          @date = date
+          @professional = professional
         end
       end
     end
   end
 end
-

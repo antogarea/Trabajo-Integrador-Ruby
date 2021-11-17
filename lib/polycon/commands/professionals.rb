@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Polycon
   module Commands
     module Professionals
@@ -9,9 +11,9 @@ module Polycon
         argument :name, required: true, desc: 'Full name of the professional'
 
         def call(name:, **)
-          abort("Este profesional ya existe") unless not Dir.exist? name
+          abort('Este profesional ya existe') if Dir.exist? name
           Professional.new(name).create
-          puts "Profesional creado exitosamente"
+          puts 'Profesional creado exitosamente'
         end
       end
 
@@ -20,11 +22,11 @@ module Polycon
 
         argument :name, required: true, desc: 'Name of the professional'
 
-        def call(name: )
+        def call(name:)
           Help.professional_existe? name
           professional = Professional.new(name)
           professional.delete
-          puts "Profesional eliminado correctamente"
+          puts 'Profesional eliminado correctamente'
         end
       end
 
@@ -45,15 +47,16 @@ module Polycon
         def call(old_name:, new_name:, **)
           # chequeo que exista el profesional a renombrar
           Help.professional_existe? old_name
-          #abort "no existe el profesional #{old_name}" unless Dir.exist? old_name
+          # abort "no existe el profesional #{old_name}" unless Dir.exist? old_name
           # chequeo que NO exista el profesional del nuevo nombre
-          abort "no se puede cambiar el nombre de este profesional porque ya existe uno con el nombre #{new_name}" unless not Dir.exist? new_name
+          if Dir.exist? new_name
+            abort "no se puede cambiar el nombre de este profesional porque ya existe uno con el nombre #{new_name}"
+          end
           # Si no se aborta por nada de esto, actualizo el nombre
           Professional.new(old_name).rename new_name
           puts "Se actualizo el profesional #{old_name} por #{new_name} "
         end
       end
-
     end
   end
 end

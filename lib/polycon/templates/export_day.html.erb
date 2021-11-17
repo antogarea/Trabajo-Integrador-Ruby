@@ -22,7 +22,7 @@
           <th scope="row"><%= hora %></th>
           <td>
             <% appointments.each do |appo| %>
-              <% if appo.get_hour() == hora %>
+              <% if appo.get_hour == hora %>
                 <p>Profesional: <%= appo.professional.name %> - Paciente: <%= appo.name %></p>
               <% end %>
             <% end %>

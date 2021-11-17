@@ -6,4 +6,4 @@ ruby '>= 2.6'
 
 gem 'dry-cli', '~> 0.7'
 
-gem "redcarpet", "~> 3.5.1"
+gem 'redcarpet', '~> 3.5.1'
