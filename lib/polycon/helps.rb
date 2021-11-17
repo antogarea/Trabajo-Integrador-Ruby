@@ -51,7 +51,7 @@ class Help
     appointments = []
     puts(date)
     if(not date.nil?)
-      Dir.foreach("#{Dir.home}/.polycon/#{professional.name}") do |appointment|
+      Dir.foreach("#{Help.path}/#{professional.name}") do |appointment|
         next if appointment == '.' || appointment == '..'
         appointment = self.remove(appointment)
         dateAppointment = Date.strptime(appointment, '%Y-%m-%d')
@@ -60,7 +60,7 @@ class Help
         end
       end
     else
-      Dir.foreach("#{Dir.home}/.polycon/#{professional.name}") do |appointment|
+      Dir.foreach("#{Help.path}/#{professional.name}") do |appointment|
         next if appointment == '.' || appointment == '..'
         appointment = self.remove(appointment)
         appointments << appointment

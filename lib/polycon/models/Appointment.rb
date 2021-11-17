@@ -14,7 +14,7 @@ class Appointment
   def self.create_appointment(date, professional, name, surname, phone, notes=nil)
     date = Help.formato date
     appointment = new(date, professional, name, surname, phone, notes)
-    File.open("#{Dir.home}/.polycon/#{appointment.professional}/#{appointment.date}.paf", "w") {|file| file.write("#{appointment.surname}\n#{appointment.name}\n#{appointment.phone}\n#{appointment.notes}")}
+    File.open("#{Help.path}/#{appointment.professional}/#{appointment.date}.paf", "w") {|file| file.write("#{appointment.surname}\n#{appointment.name}\n#{appointment.phone}\n#{appointment.notes}")}
 
   end
 
@@ -35,7 +35,7 @@ class Appointment
   end
 
   def save(date)
-    File.open("#{Dir.home}/.polycon/#{self.professional}/#{date}.paf", "w") {|file| file.write("#{self.surname}\n#{self.name}\n#{self.phone}\n#{self.notes}")}
+    File.open("#{Help.path}/#{self.professional}/#{date}.paf", "w") {|file| file.write("#{self.surname}\n#{self.name}\n#{self.phone}\n#{self.notes}")}
   end
 
   def get_date
@@ -48,7 +48,7 @@ class Appointment
 
   def self.from_file(professional, date)
     appointment = new
-    File.open("#{Dir.home}/.polycon/#{professional.name}/#{date}.paf", 'r') do |line|
+    File.open("#{Help.path}/#{professional.name}/#{date}.paf", 'r') do |line|
       appointment.professional = professional
       appointment.date = DateTime.strptime(date, "%Y-%m-%d_%H-%M")
       appointment.surname = line.readline.chomp

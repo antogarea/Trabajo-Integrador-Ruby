@@ -24,12 +24,9 @@ require 'polycon/models/Professional'
       if professional.nil?
         Professional.select_professionals.map do |prof|
           appointments += prof.appointments()
-          puts(prof.name)
         end
       else
         appointments += professional.appointments()
-      end
-      appointments.each do |appo|
       end
       return appointments
     end
