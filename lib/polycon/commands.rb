@@ -27,6 +27,7 @@ module Polycon
 
     register 'exports', aliases: ['exp'] do |prefix|
       prefix.register 'export-day', Exports::ExportDay
+      prefix.register 'export-week', Exports::ExportWeek
     end
     register 'version', Version, aliases: ['v', '-v', '--version']
   end

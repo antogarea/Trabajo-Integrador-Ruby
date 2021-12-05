@@ -67,7 +67,6 @@ class Help
     else
       Dir.foreach("#{Help.path}/#{professional.name}") do |appointment|
         next if ['.', '..'].include?(appointment)
-
         appointment = remove(appointment)
         appointments << appointment
       end

@@ -13,20 +13,24 @@
       <title><%= title %></title>
       <tr>
         <th scope="col">HORA  /  DIA</th>
-        <th scope="col"><%= date %></th>
+        <% dates.each do |date| %>
+          <th scope="col"><%= date %></th>
+        <% end %>
       </tr>
       </thead>
       <tbody>
       <% horas.each do |hora| %>
         <tr>
           <th scope="row"><%= hora %></th>
-          <td>
-            <% appointments.each do |appoinment| %>
-              <% if appoinment.get_hour == hora %>
-                <p>Profesional: <%= appoinment.professional.name %> - Paciente: <%= appoinment.name %></p>
-              <% end %>
-            <% end %>
+          <% dates.each do |date| %>
             <td>
+              <% appointments.each do |appoinment| %>
+                <% if appoinment.get_hour == hora && appoinment.get_date == date%>
+                  <p>Profesional: <%= appoinment.professional.name %> - Paciente: <%= appoinment.name %></p>
+                <% end %>
+              <% end %>
+              <td>
+          <% end %>
             </tr>
       <% end %>
       </table>
